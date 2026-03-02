@@ -1,0 +1,101 @@
+//unmanaged implementation in class zbp_i_bill_hdr_157 unique;
+//strict ( 2 );
+//
+//define behavior for ZI_BILL_HDR_157 //alias <alias_name>
+////late numbering
+//lock master
+//authorization master ( instance )
+////etag master <field_name>
+//{
+//  create ( authorization : global );
+//  update;
+//  delete;
+//  field ( readonly ) BillUuid;
+//  association _BillItems { create; }
+//}
+//
+//define behavior for ZI_BILL_ITM_157 //alias <alias_name>
+////late numbering
+//lock dependent by _BillHeader
+//authorization dependent by _BillHeader
+////etag master <field_name>
+//{
+//  update;
+//  delete;
+//  field ( readonly ) ItemUuid;
+//  association _BillHeader;
+//}
+//unmanaged implementation in class zbp_i_bill_hdr_157 unique;
+//strict ( 2 );
+//
+//define behavior for ZI_BILL_HDR_157 alias BillHeader
+//lock master
+//authorization master ( instance )
+//{
+//  create;
+//  update;
+//  delete;
+//  association _BillItems { create; }
+//
+//  field ( readonly ) BillUuid;
+//  action MarkAsPaid result [1] $self;
+//}
+//
+//define behavior for ZI_BILL_ITM_157 alias BillItem
+//lock dependent by _BillHeader
+//authorization dependent by _BillHeader
+//{
+//  update;
+//  delete;
+//
+//  // FIX: Mark the parent key field and the item key as readonly
+//  field ( readonly ) ItemUUID;
+//  field ( readonly ) BILLUUID; // Note: Ensure this exact spelling matches your CDS view alias
+//
+//  association _BillHeader;
+//}
+unmanaged implementation in class zbp_i_bill_hdr_157 unique;
+strict ( 2 );
+
+// 1. Enable draft handling for the entire business object
+with draft;
+
+define behavior for ZI_BILL_HDR_157 alias Header
+draft table zbh_d_157 // (Assuming you have a draft table defined based on your screenshot snippet)
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  // 3. Add 'with draft' to the association
+  association _BillItems { create; with draft; }
+
+  field ( readonly ) BillUuid;
+  action MarkAsPaid result [1] $self;
+
+  // 4. Mandatory draft actions for the Root entity
+  draft action Edit;
+ draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+}
+
+define behavior for ZI_BILL_ITM_157 alias BillItem
+// 5. Specify the draft table name for the Item (Max 16 characters)
+draft table zbi_d_157
+lock dependent by _BillHeader
+authorization dependent by _BillHeader
+{
+  update;
+  delete;
+
+  field ( readonly ) ItemUUID;
+  field ( readonly ) BILLUUID;
+
+  // 6. Add 'with draft' to the parent association
+  association _BillHeader { with draft; }
+}

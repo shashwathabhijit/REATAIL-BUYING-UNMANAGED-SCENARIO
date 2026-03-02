@@ -1,0 +1,30 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Bill Item', typeNamePlural: 'Bill Items' } }
+annotate entity ZC_BITM_22CS157 with
+{
+  @UI.facet: [ { id: 'Item', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Item Details', position: 10 } ]
+                 
+  @EndUserText.label: 'Item Position'
+  @UI: { lineItem: [ { position: 10 } ], identification: [ { position: 10 } ] }
+  ItemPosition;
+  
+  @EndUserText.label: 'Product ID'
+  @UI: { lineItem: [ { position: 20 } ], identification: [ { position: 20 } ] }
+  ProductId;
+  
+  @EndUserText.label: 'Quantity'
+  @UI: { lineItem: [ { position: 30 } ], identification: [ { position: 30 } ] }
+  Quantity;
+  
+  @EndUserText.label: 'Unit Price'
+  @UI: { lineItem: [ { position: 40 } ], identification: [ { position: 40 } ] }
+  UnitPrice;
+  
+  @EndUserText.label: 'Subtotal'
+  @UI: { lineItem: [ { position: 50 } ], identification: [ { position: 50 } ] }
+  Subtotal;
+  
+  @EndUserText.label: 'Currency'
+  @UI: { identification: [ { position: 60 } ] }
+  Currency;
+}

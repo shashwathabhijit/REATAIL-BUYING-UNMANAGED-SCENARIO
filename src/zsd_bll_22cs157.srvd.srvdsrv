@@ -1,0 +1,5 @@
+@EndUserText.label: 'SERVICE DEFINITION FOR THE BILLING'
+define service ZSD_BLL_22CS157 {
+  expose ZC_BHDR_22CS157;
+  expose ZC_BITM_22CS157 as BillItem;
+}

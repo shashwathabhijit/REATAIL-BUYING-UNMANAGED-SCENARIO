@@ -1,0 +1,31 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Bill', typeNamePlural: 'Bills' } }
+annotate entity ZC_BHDR_22CS157 with
+{
+  @UI.facet: [ { id: 'Header', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Bill Details', position: 10 },
+               { id: 'Items', purpose: #STANDARD, type: #LINEITEM_REFERENCE, label: 'Items', position: 20, targetElement: '_BillItems' } ]
+                 
+  @EndUserText.label: 'Bill Number'
+  @UI: { lineItem: [ { position: 10 }, { type: #FOR_ACTION, dataAction: 'MarkAsPaid', label: 'Mark as Paid' } ], identification: [ { position: 10 } ] }
+  BillNumber;
+  
+  @EndUserText.label: 'Customer Name'
+  @UI: { lineItem: [ { position: 20 } ], identification: [ { position: 20 } ] }
+  CustomerName;
+  
+  @EndUserText.label: 'Billing Date'
+  @UI: { lineItem: [ { position: 30 } ], identification: [ { position: 30 } ] }
+  BillingDate;
+  
+  @EndUserText.label: 'Total Amount'
+  @UI: { lineItem: [ { position: 40 } ], identification: [ { position: 40 } ] }
+  TotalAmount;
+  
+  @EndUserText.label: 'Currency'
+  @UI: { lineItem: [ { position: 50 } ], identification: [ { position: 50 } ] }
+  Currency;
+  
+  @EndUserText.label: 'Payment Status'
+  @UI: { lineItem: [ { position: 60 } ], identification: [ { position: 60 } ] }
+  PaymentStatus;
+}
